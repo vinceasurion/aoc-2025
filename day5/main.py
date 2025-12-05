@@ -9,22 +9,19 @@ def part_1():
   fresh = 0
   ranges = []
   with open('ranges.txt', "r") as f:
-      r = f.read().split('\n')
-      for i in r:
-        nums = i.split('-')
-        ranges.append([int(nums[0]),int(nums[1])])
+      for line in f:
+        start, end = map(int, line.strip().split('-'))
+        ranges.append((start, end))
 
-  with open("input.txt", "r") as f1:
-    nums = f1.read().split('\n')
-    duplicates = {}
-    for i in nums:
-      num = int(i)
-      for range in ranges:
-        if num >= range[0] and num <= range[1] and num not in duplicates:
-          duplicates[num] = num
-          fresh += 1
-
-  print(fresh)
+  fresh_ids = set()
+  with open("input.txt", "r") as f:
+    for line in f:
+      num = int(line.strip())
+      for start, end in ranges:
+         if start <= num <= end:
+           fresh_ids.add(num) 
+  
+  print(len(fresh_ids))
 
 """
 Part 2
